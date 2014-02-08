@@ -51,6 +51,17 @@ GLint initShader(std::string &vertFileName, std::string &fragFileName);
  *         h: new height of the window, in pixels
  */
 void reshape(int w, int h);
+
+/*
+ * renderGrid: Renders a grid of points to be passed to a shader. The positions
+ * of the points are somewhat arbitrary, since they will be sent to the shader
+ * anyways.
+ *
+ * Inputs: w: width of grid in points
+ *         h: height of grid in points
+ */
+void renderGrid(int w, int h);
+
 /*
  * render: Callback for passively updating GL. Runs approximately 60FPS,
  * although this number is not static and cannot be assumed!

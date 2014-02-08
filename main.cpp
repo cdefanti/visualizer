@@ -30,6 +30,11 @@
 int main(int argc, char** argv) {
   // TODO: Check args
 
+  // Init GLUT
+  glutInit(&argc, argv);
+  glutInitWindowSize(800, 800);
+  glutCreateWindow("Visualizer");
+
   // Init GL
   //initGL();
   // Load Shaders

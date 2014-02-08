@@ -2,7 +2,7 @@ OBJECTS=main.o glFunc.o
 SOURCES=*.cpp *.h
 GCC=clang++
 CFLAGS=-std=c++11 -stdlib=libc++ -g3 -Wall -O0 -Wno-deprecated -Werror
-LDFLAGS=-framework OpenGL -framework GLUT
+LDFLAGS=-framework OpenGL -framework GLUT -framework SFML
 PROG=visualizer
 
 all: $(PROG)
