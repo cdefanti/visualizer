@@ -18,6 +18,7 @@
 #include <string>
 #include <math.h>
 #include <cstdlib>
+#include <vector>
 
 /*
  * printShaderLog: prints out any compilation errors, etc. generated from the
