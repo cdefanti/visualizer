@@ -9,9 +9,6 @@
   #include <GL/glut.h>
 #endif
 
-// SFML Headers
-#include <SFML/Audio.hpp>
-
 // STD Lib Headers
 #include <iostream>
 #include <fstream>
@@ -21,8 +18,6 @@
 
 // Custom Headers
 #include "glFunc.h"
-
-using namespace sf;
 
 /*
  * main: Entry function for the program. Calls all other functions to get
@@ -47,8 +42,6 @@ int main(int argc, char** argv) {
   glutDisplayFunc(render);
   glutIdleFunc(render);
   glutMainLoop();
-
-  sf::Music m;
 
   // We should never get here, as GLUT takes over!
   return 1;

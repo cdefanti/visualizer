@@ -1,9 +1,20 @@
 #include "glFunc.h"
+#include <time.h>
 
 /* 
  * shaders: a list of all GLuints that link to a shader
  */
 std::vector<GLuint> shaders;
+
+/*
+ * t: current time
+ */
+float t;
+
+/*
+ * tu: uniform position for t
+*/
+static GLuint tu;
 
 void printShaderLog(GLuint obj) {
   GLsizei maxLength, length;
@@ -56,6 +67,9 @@ GLint initShader(std::string &vertFileName, std::string &fragFileName) {
   glAttachShader(shaderProgram, fragShader);
   glLinkProgram(shaderProgram);
 
+  // Attach uniforms
+  glGetUniformLocation(shaderProgram, "t");
+
   // Print out debugging info
   std::cerr << "shader program log:\n";
   printProgramLog(shaderProgram);
@@ -71,53 +85,26 @@ GLint initShader(std::string &vertFileName, std::string &fragFileName) {
 void reshape(int w, int h) {
 }
 
-void renderGrid(int w, int h) {
-  // (w - 1) * (h - 1) quads, 4 vertices per quad
-  int num_verts = (w - 1) * 6;
-  GLfloat verts[num_verts * 3];
-  GLfloat norms[num_verts * 3];
-  glEnableClientState(GL_VERTEX_ARRAY);
+void renderGrid(float minx, float maxx, float miny, float maxy, float dx, float dy) {
   glUseProgram(shaders[0]);
-  for (int i = 0; i < h - 1; i++)
-  {
-    for (int j = 0; j < w - 1; j++)
-    {
-      for (int k = 0; k < 18; k += 6)
-      {
-        norms[6 * j + k] = (((k % 3) == 1) ? 1 : 0);
-      }
-      for (int k = 0; k < 18; k += 6)
-      {
-        verts[6 * j + k] = i + ((j == 2) ? 1 : 0);
-        verts[6 * j + k + 1] = j + ((j == 2) ? 1 : 0);
-        verts[6 * j + k + 2] = 0;
-        verts[6 * j + k + 3] = i + ((j > 0) ? 1 : 0);
-        verts[6 * j + k + 4] = j + ((j < 2) ? 1 : 0);
-        verts[6 * j + k + 5] = 0;
-      }
-    }
-    glVertexPointer(3, GL_FLOAT, 0, &verts[0]);
-    glNormalPointer(GL_FLOAT, 0, &norms[0]);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, num_verts);
-  }
-  glUseProgram(0);
-  glDisableClientState(GL_VERTEX_ARRAY);
-  /*
-  glColor3f(0, 1, 0);
-  for(float u = 0; u < h; u++) {
+  for(float u = minx; u < maxx; u += dx) {
     glBegin(GL_TRIANGLE_STRIP);
-    for(float v = 0; v <= w; v++) {
+    for(float v = miny; v <= maxy; v += dy) {
       glVertex2f(u, v);
       glVertex2f(u+1, v);
     }
     glEnd();
   }
-  */
+  glUseProgram(0);
 }
 
 void render() {
+  // get new time
+  t = glutGet(GLUT_ELAPSED_TIME) / 1000.f;
+  glUseProgram(shaders[0]);
+  glUniform1f(tu, t);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  renderGrid(10, 10);
+  renderGrid(-1, 1, -1, 1, 0.01, 0.01);
   glutSwapBuffers();
 }
 
@@ -128,11 +115,12 @@ void initShaders() {
 }
 
 void initGL() {
+  t = 0;
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluPerspective(60, 1, 1, 50);
+  glOrtho(-1, 1, -1, 1, 1, 10);
   glMatrixMode(GL_MODELVIEW);
-  glTranslatef(0, 0, -40.f);
+  glTranslatef(0, 0, -5.f);
   shaders.clear();
   glClearColor(0.f, 0.f, 0.f, 1.f);
   glDisable(GL_LIGHTING);

@@ -58,10 +58,14 @@ void reshape(int w, int h);
  * of the points are somewhat arbitrary, since they will be sent to the shader
  * anyways.
  *
- * Inputs: w: width of grid in points
- *         h: height of grid in points
+ * Inputs: minx: minimum x value
+ *         maxx: maximum x value
+ *         miny: minimum y value
+ *         maxy: maximum y value
+ *         dx: how far apart each vertex is in the x direction
+ *         dy: how far apart each vertex is in the y direction
  */
-void renderGrid(int w, int h);
+void renderGrid(float minx, float maxx, float miny, float maxy, float dx, float dy);
 
 /*
  * render: Callback for passively updating GL. Runs approximately 60FPS,
