@@ -2,6 +2,7 @@
 #include <time.h>
 #include <SFML/Audio.hpp>
 #include <string>
+#include "SequentialSoundStreamer.h"
 
 /* 
  * shaders: a list of all GLuints that link to a shader
@@ -21,17 +22,19 @@ float last_t;
 /*
  * tu: uniform position for t
  */
-static GLuint tu;
+// static GLuint tu;
 
 /*
- * sb: sound buffer for program
+ * soundstream: streams sound data
  */
-sf::SoundBuffer *sb;
+sfe::SequentialSoundStreamer *soundstream;
 
 /*
  * sound_t: time of current sound
  */
 float sound_t;
+
+const static size_t BUFFER_SIZE = 2205;
 
 void printShaderLog(GLuint obj) {
   GLsizei maxLength, length;
@@ -115,16 +118,31 @@ void renderGrid(float minx, float maxx, float miny, float maxy, float dx, float 
   glUseProgram(0);
 }
 
+void renderFFT(double *dataAbs) {
+  glMatrixMode( GL_MODELVIEW );
+  glLoadIdentity();
+  glColor3f(1.0, 0.0, 0.0);
+  glBegin(GL_LINE_STRIP);
+  for (int i = 0; i < BUFFER_SIZE; i++) {
+    double x = -1 + 2.f / BUFFER_SIZE * i ;
+    double y = dataAbs[i] / (65536);
+    glVertex2d(x, y);
+  }
+  glEnd();
+}
+
 void render() {
   // get new time
   t = glutGet(GLUT_ELAPSED_TIME) / 1000.f;
   float dt = t - last_t;
   last_t = t;
   sound_t += dt;
-  glUseProgram(shaders[0]);
-  glUniform1f(tu, t);
+  double *dataAbs = soundstream->getFFTAbs();
+  //glUseProgram(shaders[0]);
+  //glUniform1f(tu, t);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  renderGrid(-1, 1, -1, 1, 0.01, 0.01);
+  renderFFT(dataAbs);
+  //renderGrid(-1, 1, -1, 1, 0.01, 0.01);
   glutSwapBuffers();
 }
 
@@ -134,18 +152,28 @@ void initShaders() {
   shaders.push_back(initShader(vs, fs));
 }
 
+void initSoundStream() {
+  soundstream = new sfe::SequentialSoundStreamer(BUFFER_SIZE);
+  std::string filename = "metamor4.wav";
+  //std::string filename = "welcome.wav";
+  sf::SoundBuffer buffer;
+  buffer.loadFromFile(filename);
+  soundstream->load(buffer);
+  soundstream->play();
+}
+
 void initGL() {
   t = 0;
   last_t = 0;
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glOrtho(-1, 1, -1, 1, 1, 10);
+  glOrtho(-1, 1, 0, 2, -1, 1);
   glMatrixMode(GL_MODELVIEW);
   glTranslatef(0, 0, -5.f);
   shaders.clear();
   glClearColor(0.f, 0.f, 0.f, 1.f);
   glDisable(GL_LIGHTING);
   glEnable(GL_DEPTH_TEST);
-  initShaders();
-  initSoundBuffer();
+  //initShaders();
+  initSoundStream();
 }

@@ -84,4 +84,8 @@ void loadShaders();
  */
 void initGL();
 
+
+void initSoundStream();
+void renderFFT(double *dataAbs);
+
 #endif
