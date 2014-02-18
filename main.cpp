@@ -16,6 +16,8 @@
 #include <math.h>
 #include <cstdlib>
 
+#include <SFML/Audio.hpp>
+
 // Custom Headers
 #include "glFunc.h"
 
