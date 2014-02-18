@@ -154,8 +154,8 @@ void initShaders() {
 
 void initSoundStream() {
   soundstream = new sfe::SequentialSoundStreamer(BUFFER_SIZE);
-  //std::string filename = "metamor4.wav";
-  std::string filename = "welcome.wav";
+  std::string filename = "metamor4.wav";
+  //std::string filename = "welcome.wav";
   //std::string filename = "sin.wav";
   sf::SoundBuffer buffer;
   buffer.loadFromFile(filename);

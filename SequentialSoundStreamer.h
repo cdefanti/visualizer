@@ -3,7 +3,6 @@
 
 #include <SFML/Audio.hpp>
 #include <SFML/System/Time.hpp>
-#include <sndfile.h>
 #include <fftw3.h>
 #include <iostream>
 #include <fftw3.h>
