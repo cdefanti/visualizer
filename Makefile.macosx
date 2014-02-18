@@ -1,13 +1,11 @@
 FFTWDIR=/usr/local/Cellar/fftw/3.3.3
 FFTWLIB=$(FFTWDIR)/lib
 FFTWINC=$(FFTWDIR)/include
-SNDFILEDIR=/usr/local/Cellar/libsndfile/1.0.25
-SNDFILELIB=$(SNDFILEDIR)/lib
 OBJECTS=main.o glFunc.o SequentialSoundStreamer.o
 SOURCES=*.cpp *.h
 GCC=clang++
 CFLAGS=-std=c++11 -stdlib=libc++ -g3 -Wall -O0 -Wno-deprecated -Werror
-LDFLAGS=-framework OpenGL -framework GLUT -framework SFML -framework sfml-audio -framework sfml-system -L$(FFTWLIB) -lfftw3f -lfftw3 -lfftw3l -L$(SNDFILELIB) -lsndfile
+LDFLAGS=-framework OpenGL -framework GLUT -framework SFML -framework sfml-audio -framework sfml-system -L$(FFTWLIB) -lfftw3f -lfftw3 -lfftw3l
 PROG=visualizer
 
 all: $(PROG)
@@ -19,6 +17,6 @@ $(PROG): $(OBJECTS)
 	$(GCC) $(CFLAGS) -c $<
 
 clean:
-	-rm $(OBJECTS) $(PROG)
+	-rm -f $(OBJECTS) $(PROG)
 
 
