@@ -19,6 +19,9 @@ Turing::Turing(int acts[scales], int inhibs[scales], double smalls[scales], int 
 	std::copy(syms, syms+scales, symmetries);
 	std::copy(smalls, smalls+scales, smallAmounts);
 
+	resWidth = resW;
+	resHeight = resH;
+
 	//Setting array sizes
 	pattern = (double**)malloc(resWidth*sizeof(double*));
 	for(int i = 0; i < scales; i ++){
@@ -38,7 +41,7 @@ Turing::Turing(int acts[scales], int inhibs[scales], double smalls[scales], int 
 	}
 
 	//Initial randomization of main array
-	std::srand(time(NULL)); 
+	std::srand((unsigned int)time(NULL)); 
 	for(int i = 0; i < resWidth; i++){
 		for(int j = 0; j < resHeight; j++){
 			pattern[i][j] = (double)rand()/RAND_MAX;

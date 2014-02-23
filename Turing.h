@@ -10,8 +10,7 @@ class Turing
 {
 public :
 	Turing();
-    Turing(int acts[5], int inhibs[5], double smalls[5], int w[5], int syms[5], int resW, int resH):
-		resWidth(resW), resHeight(resH) {}
+    Turing(int acts[5], int inhibs[5], double smalls[5], int w[5], int syms[5], int resW, int resH);
 
 	~Turing();
 
