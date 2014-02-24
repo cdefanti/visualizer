@@ -21,8 +21,17 @@ namespace sfe
           outPhase = (double*) malloc(sizeof(double) * myBufferSize);
         }
       virtual ~SequentialSoundStreamer() {}
+      /**
+       * loads data from a sound buffer object
+       */
       void load(const sf::SoundBuffer &buffer);
+      /**
+       * returns an array of the magnitude of the transformed data
+       */
       double* getFFTAbs() { return outAbs; }
+      /**
+       * returns an array of the phase of the transformed data
+       */
       double* getFFTPhase() { return outPhase; }
 
     private :

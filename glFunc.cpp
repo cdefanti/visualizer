@@ -124,7 +124,7 @@ void renderFFT(double *dataAbs) {
   glColor3f(1.0, 0.0, 0.0);
   glBegin(GL_LINE_STRIP);
   for (int i = 0; i < BUFFER_SIZE; i++) {
-    double x = -1 + 2.f / BUFFER_SIZE * i ;
+    double x = -1 + 2.f / BUFFER_SIZE * i;
     double y = dataAbs[i] / (65536);
     glVertex2d(x, y);
   }
