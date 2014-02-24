@@ -12,14 +12,18 @@ public :
 	Turing();
     Turing(int acts[5], int inhibs[5], double smalls[5], int w[5], int syms[5], int resW, int resH);
 
-	~Turing();
+	//~Turing() {}
 
-	double ** iterate();
+	void iterate();
+	double ** GetArray();
+	double GetPixel(int x, int y);
+
+	double **pattern;
 
 private :
 	int activators[scales], inhibitors[scales], weights[scales], symmetries[scales], resWidth, resHeight;
 	double smallAmounts[scales];
-	double **pattern, **patternT, **activatorM[scales], **inhibitorM[scales], **variationM[scales], **aiDiffM[scales];
+	double **activatorM[scales], **inhibitorM[scales], **variationM[scales], **aiDiffM[scales];
 
 	void Activator(), Activator(int sn);
 	void Inhibitor(), Inhibitor(int sn);

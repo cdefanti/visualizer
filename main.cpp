@@ -1,50 +1,26 @@
-// GL Headers
-#if defined (__APPLE__) || defined(MACOSX)
-  #include <OpenGL/gl.h>
-  #include <OpenGL/glu.h>
-  #include <GLUT/glut.h>
-#else
-  #include <GL/gl.h>
-  #include <GL/glu.h>
-  #include <GL/glut.h>
-#endif
-
 // STD Lib Headers
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <math.h>
 #include <cstdlib>
+#include "Turing.h"
 
 #include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
 
-// Custom Headers
-#include "glFunc.h"
+int main()
+{
+        // create a quad
+		int rw = 640;
+		int rh = 360;
+		Turing *test = new Turing();
+		test->iterate();
 
-/*
- * main: Entry function for the program. Calls all other functions to get
- * program running.
- *
- * Inputs: argc: Number of arguments input to program
- *         argv: Arguments input to program
- * Outputs: Status of program termination.
- */
-int main(int argc, char** argv) {
-  // TODO: Check args
+		int i = test->GetPixel(0,0);
 
-  // Init GLUT
-  glutInit(&argc, argv);
-  glutInitWindowSize(800, 800);
-  glutCreateWindow("Visualizer");
-
-  // Init GL
-  initGL();
-  // Set Callbacks
-  glutReshapeFunc(reshape);
-  glutDisplayFunc(render);
-  glutIdleFunc(render);
-  glutMainLoop();
-
-  // We should never get here, as GLUT takes over!
-  return 1;
+    //Keeps terminal from closing after showing results in Windows
+	std::cout<<"\n\nPress ENTER to exit the Matrix";
+	std::cin.ignore(std::cin.rdbuf()->in_avail()+1);
+	return 0;
 }

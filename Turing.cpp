@@ -1,4 +1,5 @@
 #include "Turing.h"
+#include <iostream>
 
 
 int ac[scales] = {100, 20, 10, 5, 1},
@@ -47,15 +48,23 @@ Turing::Turing(int acts[scales], int inhibs[scales], double smalls[scales], int 
 			pattern[i][j] = (double)rand()/RAND_MAX;
 		}
 	}
+	std::cout << pattern[0][0];
 }
 
-double ** Turing::iterate(){
+void Turing::iterate(){
 	Activator();
 	Inhibitor();
 	AIDiff();
 	Variation();
 	UpdatePixels();
+}
+
+double ** Turing::GetArray(){
 	return pattern;
+}
+
+double Turing::GetPixel(int x, int y){
+	return activatorM[0][x][y];
 }
 
 void Turing::Activator(){
