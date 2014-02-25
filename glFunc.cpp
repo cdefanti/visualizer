@@ -36,6 +36,11 @@ float sound_t;
 
 const static size_t BUFFER_SIZE = 2205;
 
+/*
+ * sb: sound buffer for program
+ */
+sf::SoundBuffer *sb;
+
 void printShaderLog(GLuint obj) {
   GLsizei maxLength, length;
   glGetShaderiv(obj, GL_INFO_LOG_LENGTH, &maxLength);

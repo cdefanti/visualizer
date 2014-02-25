@@ -21,7 +21,7 @@
 // Custom Headers
 #include "glFunc.h"
 
-/*
+/**
  * main: Entry function for the program. Calls all other functions to get
  * program running.
  *
