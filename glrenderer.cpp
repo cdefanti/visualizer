@@ -1,42 +1,6 @@
-#include "glFunc.h"
-#include <time.h>
-#include <SFML/Audio.hpp>
-#include <string>
-#include "SequentialSoundStreamer.h"
+#include "glrenderer.h"
 
-/* 
- * shaders: a list of all GLuints that link to a shader
- */
-std::vector<GLuint> shaders;
-
-/*
- * t: current time
- */
-float t;
-
-/*
- * last_t: last time
- */
-float last_t;
-
-/*
- * tu: uniform position for t
- */
-// static GLuint tu;
-
-/*
- * soundstream: streams sound data
- */
-sfe::SequentialSoundStreamer *soundstream;
-
-/*
- * sound_t: time of current sound
- */
-float sound_t;
-
-const static size_t BUFFER_SIZE = 2205;
-
-void printShaderLog(GLuint obj) {
+void glrenderer::printShaderLog(GLuint obj) {
   GLsizei maxLength, length;
   glGetShaderiv(obj, GL_INFO_LOG_LENGTH, &maxLength);
   GLchar* log = (GLchar*)malloc(maxLength);
@@ -45,7 +9,7 @@ void printShaderLog(GLuint obj) {
   free(log);
 }
 
-void printProgramLog(GLuint obj) {
+void glrenderer::printProgramLog(GLuint obj) {
   GLsizei maxLength, length;
   glGetProgramiv(obj, GL_INFO_LOG_LENGTH, &maxLength);
   GLchar* log = (GLchar*)malloc(maxLength);
@@ -54,7 +18,7 @@ void printProgramLog(GLuint obj) {
   free(log);
 }
 
-GLint initShader(std::string &vertFileName, std::string &fragFileName) {
+GLint glrenderer::initShader(std::string &vertFileName, std::string &fragFileName) {
   GLint shaderProgram = glCreateProgram();
 
   // First, verify that the shader filenames are valid
@@ -102,10 +66,17 @@ GLint initShader(std::string &vertFileName, std::string &fragFileName) {
   return shaderProgram;
 }
 
-void reshape(int w, int h) {
+void glrenderer::resizeGL(int width, int height) {
+    height = (height < 1) ? 1 : height;
+    width = (width < 1) ? 1 : width;
+
+    glViewport(0, 0, width, height);
+    dim_ = glm::vec2(width, height);
+
+    updateGL();
 }
 
-void renderGrid(float minx, float maxx, float miny, float maxy, float dx, float dy) {
+void glrenderer::renderGrid(float minx, float maxx, float miny, float maxy, float dx, float dy) {
   glUseProgram(shaders[0]);
   for(float u = minx; u < maxx; u += dx) {
     glBegin(GL_TRIANGLE_STRIP);
@@ -118,54 +89,54 @@ void renderGrid(float minx, float maxx, float miny, float maxy, float dx, float 
   glUseProgram(0);
 }
 
-void renderFFT(double *dataAbs) {
+void glrenderer::renderFFT(double *dataAbs) {
   glMatrixMode( GL_MODELVIEW );
   glLoadIdentity();
   glColor3f(1.0, 0.0, 0.0);
   glBegin(GL_LINE_STRIP);
-  for (int i = 0; i < BUFFER_SIZE; i++) {
-    double x = -1 + 2.f / BUFFER_SIZE * i;
+  for (int i = 0; i < buffersize_; i++) {
+    double x = -1 + 2.f / buffersize_ * i;
     double y = dataAbs[i] / (65536);
     glVertex2d(x, y);
   }
   glEnd();
 }
 
-void render() {
-  // get new time
-  t = glutGet(GLUT_ELAPSED_TIME) / 1000.f;
-  float dt = t - last_t;
-  last_t = t;
-  sound_t += dt;
-  double *dataAbs = soundstream->getFFTAbs();
+void glrenderer::render() {
   //glUseProgram(shaders[0]);
   //glUniform1f(tu, t);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  double *dataAbs = soundstream_->getFFTAbs();
   renderFFT(dataAbs);
   //renderGrid(-1, 1, -1, 1, 0.01, 0.01);
-  glutSwapBuffers();
 }
 
-void initShaders() {
+void glrenderer::initShaders() {
   std::string vs = "shaders/test.vs.glsl";
   std::string fs = "shaders/test.fs.glsl";
   shaders.push_back(initShader(vs, fs));
 }
 
-void initSoundStream() {
-  soundstream = new sfe::SequentialSoundStreamer(BUFFER_SIZE);
-  std::string filename = "metamor4.wav";
-  //std::string filename = "welcome.wav";
-  //std::string filename = "sin.wav";
-  sf::SoundBuffer buffer;
-  buffer.loadFromFile(filename);
-  soundstream->load(buffer);
-  soundstream->play();
+void glrenderer::initSoundStream() {
+  soundstream_ = new sfe::SequentialSoundStreamer(buffersize_);
 }
 
-void initGL() {
-  t = 0;
-  last_t = 0;
+void glrenderer::loadSoundFile(const std::string &filename)
+{
+    soundstream_->stop();
+    sf::SoundBuffer buffer;
+    buffer.loadFromFile(filename);
+    soundstream_->load(buffer);
+    soundstream_->play();
+}
+
+void glrenderer::initializeGL() {
+  connect(&timer_, SIGNAL(timeout()), this, SLOT(updateGL()));
+  timer_.setInterval(0);
+  timer_.start();
+  etimer_.start();
+  t_ = 0;
+  last_t_ = 0;
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrtho(-1, 1, 0, 2, -1, 1);
@@ -177,4 +148,19 @@ void initGL() {
   glEnable(GL_DEPTH_TEST);
   //initShaders();
   initSoundStream();
+}
+
+void glrenderer::paintGL()
+{
+    render();
+}
+
+void glrenderer::updateGL()
+{
+    // get new time
+    float t = (float)etimer_.elapsed() / 1000.f;
+    float dt = t_ - last_t_;
+    last_t_ = t_;
+    sound_t_ += dt;
+    update();
 }
