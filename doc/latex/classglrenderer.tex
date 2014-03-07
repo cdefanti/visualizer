@@ -1,0 +1,246 @@
+\hypertarget{classglrenderer}{\section{glrenderer Class Reference}
+\label{classglrenderer}\index{glrenderer@{glrenderer}}
+}
+Inheritance diagram for glrenderer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classglrenderer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classglrenderer_acb574b369f4dd78d048ef4703c017c1a}{void \hyperlink{classglrenderer_acb574b369f4dd78d048ef4703c017c1a}{load\+Shaders} ()}\label{classglrenderer_acb574b369f4dd78d048ef4703c017c1a}
+
+\begin{DoxyCompactList}\small\item\em load\+Shaders loads all available shaders \end{DoxyCompactList}\item 
+void \hyperlink{classglrenderer_aef045836076110d931a2a372a7cfb3ff}{load\+Sound\+File} (const std\+::string \&filename)
+\begin{DoxyCompactList}\small\item\em load\+Sound\+File loads a sound file at a given filename \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classglrenderer_ac168f504d3dc873dd032c996c962ad90}{void \hyperlink{classglrenderer_ac168f504d3dc873dd032c996c962ad90}{initialize\+G\+L} ()}\label{classglrenderer_ac168f504d3dc873dd032c996c962ad90}
+
+\begin{DoxyCompactList}\small\item\em initialize\+G\+L Calls several functions to setup the initial G\+L state. \end{DoxyCompactList}\item 
+\hypertarget{classglrenderer_a79e6616b1c2c34801742aaf69fc6e5df}{void {\bfseries paint\+G\+L} ()}\label{classglrenderer_a79e6616b1c2c34801742aaf69fc6e5df}
+
+\item 
+\hypertarget{classglrenderer_aee012c84c43499364df0c97a160169cf}{void {\bfseries update\+G\+L} ()}\label{classglrenderer_aee012c84c43499364df0c97a160169cf}
+
+\item 
+void \hyperlink{classglrenderer_a1743b7d54ffad4131e877486a99a568c}{resize\+G\+L} (int width, int height)
+\begin{DoxyCompactList}\small\item\em resize\+G\+L callback for reshaping the window \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classglrenderer_ab90e6a3eca112f7048b36940c6f9f7ab}{print\+Shader\+Log} (G\+Luint obj)
+\begin{DoxyCompactList}\small\item\em print\+Shader\+Log prints out any compilation errors, etc. generated from the creation of this G\+L object \end{DoxyCompactList}\item 
+void \hyperlink{classglrenderer_ae809cfd8ed84e1596fc2b6295faee1e6}{print\+Program\+Log} (G\+Luint obj)
+\begin{DoxyCompactList}\small\item\em prints out any compilation errors, etc. generated from the creation of this G\+L object \end{DoxyCompactList}\item 
+G\+Lint \hyperlink{classglrenderer_ac2520771e2459563dcbfc98fb48431c3}{init\+Shader} (std\+::string \&vert\+File\+Name, std\+::string \&frag\+File\+Name)
+\begin{DoxyCompactList}\small\item\em init\+Shader generates a shader program object from the given vertex and fragment source files \end{DoxyCompactList}\item 
+\hypertarget{classglrenderer_a89899cb659769f33bd8e2610527a421e}{void \hyperlink{classglrenderer_a89899cb659769f33bd8e2610527a421e}{init\+Shaders} ()}\label{classglrenderer_a89899cb659769f33bd8e2610527a421e}
+
+\begin{DoxyCompactList}\small\item\em init\+Shaders generates a bunch of shaders. \end{DoxyCompactList}\item 
+\hypertarget{classglrenderer_a55618adb9e0917c835e52a3d256ef1d3}{void \hyperlink{classglrenderer_a55618adb9e0917c835e52a3d256ef1d3}{init\+Buffers} ()}\label{classglrenderer_a55618adb9e0917c835e52a3d256ef1d3}
+
+\begin{DoxyCompactList}\small\item\em init\+Buffers initializes frame buffer objects for render to texture procedures \end{DoxyCompactList}\item 
+void \hyperlink{classglrenderer_ad59e653833eaab9f9eb1e60ef3cec332}{render\+Grid} (float minx, float maxx, float miny, float maxy, float dx, float dy)
+\begin{DoxyCompactList}\small\item\em render\+Grid Renders a grid of points to be passed to a shader. The positions of the points are somewhat arbitrary, since they will be sent to the shader anyways. \end{DoxyCompactList}\item 
+\hypertarget{classglrenderer_a7e1a9ca2d682ef93705dd85d27dec830}{void \hyperlink{classglrenderer_a7e1a9ca2d682ef93705dd85d27dec830}{render} ()}\label{classglrenderer_a7e1a9ca2d682ef93705dd85d27dec830}
+
+\begin{DoxyCompactList}\small\item\em render called during the \char`\"{}paint\+G\+L\char`\"{} callback. Runs approximately 60\+F\+P\+S, although this number is not static and cannot be assumed! \end{DoxyCompactList}\item 
+\hypertarget{classglrenderer_a7751070a6f58b09f9b027e59d7533011}{void {\bfseries init\+Sound\+Stream} ()}\label{classglrenderer_a7751070a6f58b09f9b027e59d7533011}
+
+\item 
+\hypertarget{classglrenderer_a27bd7bcc2c4defe5152816e8e8ac690c}{void {\bfseries render\+F\+F\+T} (double $\ast$data\+Abs)}\label{classglrenderer_a27bd7bcc2c4defe5152816e8e8ac690c}
+
+\item 
+\hypertarget{classglrenderer_a80b4fe511f5c6cc6a09c7daf4f3f3d62}{void {\bfseries render\+To\+Texture} ()}\label{classglrenderer_a80b4fe511f5c6cc6a09c7daf4f3f3d62}
+
+\item 
+\hypertarget{classglrenderer_ad79d4e42fb594df49bde8ea5765151fc}{glm\+::vec3 {\bfseries H\+S\+Vto\+R\+G\+B} (float h, float s, float v)}\label{classglrenderer_ad79d4e42fb594df49bde8ea5765151fc}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classglrenderer_a6d797cf041a7b0e41d2fb7143e5cdd50}{glm\+::vec2 {\bfseries dim\+\_\+}}\label{classglrenderer_a6d797cf041a7b0e41d2fb7143e5cdd50}
+
+\item 
+\hypertarget{classglrenderer_acfd79b958ddd8151a6f309a699ee7993}{std\+::vector$<$ G\+Luint $>$ \hyperlink{classglrenderer_acfd79b958ddd8151a6f309a699ee7993}{shaders}}\label{classglrenderer_acfd79b958ddd8151a6f309a699ee7993}
+
+\begin{DoxyCompactList}\small\item\em shaders a list of all G\+Luints that link to a shader \end{DoxyCompactList}\item 
+\hypertarget{classglrenderer_ad66b91cdaa22164b04bed33c5cb871e5}{float \hyperlink{classglrenderer_ad66b91cdaa22164b04bed33c5cb871e5}{t\+\_\+}}\label{classglrenderer_ad66b91cdaa22164b04bed33c5cb871e5}
+
+\begin{DoxyCompactList}\small\item\em t current time \end{DoxyCompactList}\item 
+\hypertarget{classglrenderer_ac4458e650ddb3f8a2ed453894f90c678}{float \hyperlink{classglrenderer_ac4458e650ddb3f8a2ed453894f90c678}{last\+\_\+t\+\_\+}}\label{classglrenderer_ac4458e650ddb3f8a2ed453894f90c678}
+
+\begin{DoxyCompactList}\small\item\em last\+\_\+t time of last frame \end{DoxyCompactList}\item 
+\hypertarget{classglrenderer_a817bd1af09fff95e86e34ccc888f5424}{\hyperlink{classsfe_1_1_sequential_sound_streamer}{sfe\+::\+Sequential\+Sound\+Streamer} $\ast$ \hyperlink{classglrenderer_a817bd1af09fff95e86e34ccc888f5424}{soundstream\+\_\+}}\label{classglrenderer_a817bd1af09fff95e86e34ccc888f5424}
+
+\begin{DoxyCompactList}\small\item\em soundstream used to stream sound data \end{DoxyCompactList}\item 
+\hypertarget{classglrenderer_a91c7277b1eaef67da6e862123ddbfa38}{float \hyperlink{classglrenderer_a91c7277b1eaef67da6e862123ddbfa38}{sound\+\_\+t\+\_\+}}\label{classglrenderer_a91c7277b1eaef67da6e862123ddbfa38}
+
+\begin{DoxyCompactList}\small\item\em sound\+\_\+t time of current sound \end{DoxyCompactList}\item 
+\hypertarget{classglrenderer_a9290e152323d6ea26964685e5aa8b547}{G\+Luint \hyperlink{classglrenderer_a9290e152323d6ea26964685e5aa8b547}{fbo}}\label{classglrenderer_a9290e152323d6ea26964685e5aa8b547}
+
+\begin{DoxyCompactList}\small\item\em fbo pixel buffer object for the output pixels \end{DoxyCompactList}\item 
+\hypertarget{classglrenderer_a5f72e06bbeea3d339200ecc30be840d7}{G\+Luint $\ast$ \hyperlink{classglrenderer_a5f72e06bbeea3d339200ecc30be840d7}{vbo}}\label{classglrenderer_a5f72e06bbeea3d339200ecc30be840d7}
+
+\begin{DoxyCompactList}\small\item\em vbo pixel buffer object for calculating variance \end{DoxyCompactList}\item 
+\hypertarget{classglrenderer_a7df05aa3b22a05dc12e13d0d624bd0c0}{G\+Luint {\bfseries dbo}}\label{classglrenderer_a7df05aa3b22a05dc12e13d0d624bd0c0}
+
+\item 
+\hypertarget{classglrenderer_a122c79aaf9596256554145d36b134c0f}{G\+Luint {\bfseries pixels\+\_\+} \mbox{[}2\mbox{]}}\label{classglrenderer_a122c79aaf9596256554145d36b134c0f}
+
+\item 
+\hypertarget{classglrenderer_aec06d37529a85996e6a07f92782870c1}{G\+Luint {\bfseries sound\+Tex}}\label{classglrenderer_aec06d37529a85996e6a07f92782870c1}
+
+\item 
+\hypertarget{classglrenderer_acfa2e1407c1dcb33c143f946b86c7eb5}{G\+Luint {\bfseries sound\+Tex\+Loc\+\_\+}}\label{classglrenderer_acfa2e1407c1dcb33c143f946b86c7eb5}
+
+\item 
+\hypertarget{classglrenderer_ad57c1067763fa41daf76bb9df001c746}{G\+Luint {\bfseries pixel\+Tex\+Loc\+\_\+}}\label{classglrenderer_ad57c1067763fa41daf76bb9df001c746}
+
+\item 
+\hypertarget{classglrenderer_adae4055c80604f2c8b157764edb1c6b9}{size\+\_\+t {\bfseries buffersize\+\_\+}}\label{classglrenderer_adae4055c80604f2c8b157764edb1c6b9}
+
+\item 
+\hypertarget{classglrenderer_acfb55ec6086c39e4e248f843f935dc65}{Q\+Timer {\bfseries timer\+\_\+}}\label{classglrenderer_acfb55ec6086c39e4e248f843f935dc65}
+
+\item 
+\hypertarget{classglrenderer_a9d34cb31d4727ae4c117c7201c1e2591}{Q\+Elapsed\+Timer {\bfseries etimer\+\_\+}}\label{classglrenderer_a9d34cb31d4727ae4c117c7201c1e2591}
+
+\item 
+\hypertarget{classglrenderer_ab5e4d8b9d4611bbba87a9f813eda8c74}{int {\bfseries pingpong}}\label{classglrenderer_ab5e4d8b9d4611bbba87a9f813eda8c74}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classglrenderer_ac2520771e2459563dcbfc98fb48431c3}{\index{glrenderer@{glrenderer}!init\+Shader@{init\+Shader}}
+\index{init\+Shader@{init\+Shader}!glrenderer@{glrenderer}}
+\subsubsection[{init\+Shader}]{\setlength{\rightskip}{0pt plus 5cm}G\+Lint glrenderer\+::init\+Shader (
+\begin{DoxyParamCaption}
+\item[{std\+::string \&}]{vert\+File\+Name, }
+\item[{std\+::string \&}]{frag\+File\+Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classglrenderer_ac2520771e2459563dcbfc98fb48431c3}
+
+
+init\+Shader generates a shader program object from the given vertex and fragment source files 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vert\+File\+Name} & vertex shader source filename \\
+\hline
+{\em frag\+File\+Name} & fragment shader source filename \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+shader program object 
+\end{DoxyReturn}
+\hypertarget{classglrenderer_aef045836076110d931a2a372a7cfb3ff}{\index{glrenderer@{glrenderer}!load\+Sound\+File@{load\+Sound\+File}}
+\index{load\+Sound\+File@{load\+Sound\+File}!glrenderer@{glrenderer}}
+\subsubsection[{load\+Sound\+File}]{\setlength{\rightskip}{0pt plus 5cm}void glrenderer\+::load\+Sound\+File (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{filename}
+\end{DoxyParamCaption}
+)}}\label{classglrenderer_aef045836076110d931a2a372a7cfb3ff}
+
+
+load\+Sound\+File loads a sound file at a given filename 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & the location of the file to be played \\
+\hline
+\end{DoxyParams}
+\hypertarget{classglrenderer_ae809cfd8ed84e1596fc2b6295faee1e6}{\index{glrenderer@{glrenderer}!print\+Program\+Log@{print\+Program\+Log}}
+\index{print\+Program\+Log@{print\+Program\+Log}!glrenderer@{glrenderer}}
+\subsubsection[{print\+Program\+Log}]{\setlength{\rightskip}{0pt plus 5cm}void glrenderer\+::print\+Program\+Log (
+\begin{DoxyParamCaption}
+\item[{G\+Luint}]{obj}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classglrenderer_ae809cfd8ed84e1596fc2b6295faee1e6}
+
+
+prints out any compilation errors, etc. generated from the creation of this G\+L object 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & shader object I\+D \\
+\hline
+\end{DoxyParams}
+\hypertarget{classglrenderer_ab90e6a3eca112f7048b36940c6f9f7ab}{\index{glrenderer@{glrenderer}!print\+Shader\+Log@{print\+Shader\+Log}}
+\index{print\+Shader\+Log@{print\+Shader\+Log}!glrenderer@{glrenderer}}
+\subsubsection[{print\+Shader\+Log}]{\setlength{\rightskip}{0pt plus 5cm}void glrenderer\+::print\+Shader\+Log (
+\begin{DoxyParamCaption}
+\item[{G\+Luint}]{obj}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classglrenderer_ab90e6a3eca112f7048b36940c6f9f7ab}
+
+
+print\+Shader\+Log prints out any compilation errors, etc. generated from the creation of this G\+L object 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & shader object I\+D \\
+\hline
+\end{DoxyParams}
+\hypertarget{classglrenderer_ad59e653833eaab9f9eb1e60ef3cec332}{\index{glrenderer@{glrenderer}!render\+Grid@{render\+Grid}}
+\index{render\+Grid@{render\+Grid}!glrenderer@{glrenderer}}
+\subsubsection[{render\+Grid}]{\setlength{\rightskip}{0pt plus 5cm}void glrenderer\+::render\+Grid (
+\begin{DoxyParamCaption}
+\item[{float}]{minx, }
+\item[{float}]{maxx, }
+\item[{float}]{miny, }
+\item[{float}]{maxy, }
+\item[{float}]{dx, }
+\item[{float}]{dy}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classglrenderer_ad59e653833eaab9f9eb1e60ef3cec332}
+
+
+render\+Grid Renders a grid of points to be passed to a shader. The positions of the points are somewhat arbitrary, since they will be sent to the shader anyways. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em minx} & minimum x value \\
+\hline
+{\em maxx} & maximum x value \\
+\hline
+{\em miny} & minimum y value \\
+\hline
+{\em maxy} & maximum y value \\
+\hline
+{\em dx} & how far apart each vertex is in the x direction \\
+\hline
+{\em dy} & how far apart each vertex is in the y direction \\
+\hline
+\end{DoxyParams}
+\hypertarget{classglrenderer_a1743b7d54ffad4131e877486a99a568c}{\index{glrenderer@{glrenderer}!resize\+G\+L@{resize\+G\+L}}
+\index{resize\+G\+L@{resize\+G\+L}!glrenderer@{glrenderer}}
+\subsubsection[{resize\+G\+L}]{\setlength{\rightskip}{0pt plus 5cm}void glrenderer\+::resize\+G\+L (
+\begin{DoxyParamCaption}
+\item[{int}]{width, }
+\item[{int}]{height}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classglrenderer_a1743b7d54ffad4131e877486a99a568c}
+
+
+resize\+G\+L callback for reshaping the window 
+
+
+\begin{DoxyParams}{Parameters}
+{\em w} & new width of the window, in pixels \\
+\hline
+{\em h} & new height of the window, in pixels \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+glrenderer.\+h\item 
+glrenderer.\+cpp\end{DoxyCompactItemize}

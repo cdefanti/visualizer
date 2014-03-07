@@ -7,11 +7,11 @@ Turing::Turing(){
 	InitTuring(aDef, iDef, saDef, wDef, sDef, 600,600);
 }
 
-Turing::Turing(const int acts[5], const int inhibs[5], const double smalls[5], const int w[5], const int syms[5], const int resW, const int resH){
+Turing::Turing(const int *acts, const int *inhibs, const double *smalls, const int *w, const int *syms, const int resW, const int resH){
 	InitTuring(acts, inhibs, smalls, w, syms, resW, resH);
 }
     
-void Turing::InitTuring(const int acts[5], const int inhibs[5], const double smalls[5], const int w[5], const int syms[5], const int resW, const int resH){
+void Turing::InitTuring(const int *acts, const int *inhibs, const double *smalls, const int *w, const int *syms, const int resW, const int resH){
 	activators = (int*)malloc(scales*sizeof(int));
 	inhibitors = (int*)malloc(scales*sizeof(int));
 	weights = (int*)malloc(scales*sizeof(int));
@@ -67,9 +67,9 @@ void Turing::InitTuring(const int acts[5], const int inhibs[5], const double sma
 
 void Turing::iterate(){
 	Activator();
-	//RActivator();
+    RActivator();
 	Inhibitor();
-	//RInhibitor();
+    RInhibitor();
 	AIDiff();
 	Variation();
 	UpdatePixels();
@@ -159,16 +159,18 @@ void Turing::UpdatePixels(){
 	//Go through every pixel
 	for(int i = 0; i < resWidth; i++){
 		for(int j = 0; j < resHeight; j++){
-			int bestv = 0;
+            int bestv = 0;
 
 			//Find scale with smallest variation
-			for(int k = 1; k < scales; k++){
-				if(variationM[k][i][j] < variationM[bestv][i][j])
+            for(int k = 1; k < scales; k++){
+                if(GetMVal(variationM[k],i,j) < GetMVal(variationM[bestv],i,j))
+                {
 					bestv = k;
+                }
 			}
 			//Update each pixel
-			if(activatorM[bestv][i][j] > inhibitorM[bestv][i][j])
-				pattern[i][j] += smallAmounts[bestv];
+            if(activatorM[bestv][i][j] > inhibitorM[bestv][i][j])
+                pattern[i][j] += smallAmounts[bestv];
 			else 
 				pattern[i][j] -= smallAmounts[bestv];
 		}
@@ -230,7 +232,7 @@ void Turing::SetV(int s){
 
 void Turing::RAvgM(double ***list, int s){
 	//Symmetrizes s activator
-	double theta = 6.283185/symmetries[s];
+    double theta = (2 * M_PI)/symmetries[s];
 	for(int i = 0; i < resWidth; i++){
 		for(int j = 0; j < resHeight; j++){
 			double total = GetMVal(list[s], i, j);
@@ -238,7 +240,7 @@ void Turing::RAvgM(double ***list, int s){
 				int x = i-resWidth/2;
 				int y = resHeight/2-j;
 				double rad = sqrt((double)x*x+(double)y*y);
-				double phi = atan2((double)x,(double)y);
+                double phi = atan2((double)y,(double)x);
 				total += GetMVal(list[s], (int)(rad*cos(phi+r*theta))+resWidth/2, resHeight/2-(int)(rad*sin(phi+r*theta)));
 			}
 			list[s][i][j] = total/symmetries[s];
@@ -254,7 +256,7 @@ void Turing::RAvgM(double ***list, int s){
 void Turing::AbsMatrixSubtract(double **pos, double **neg, double **dest, int x, int y){
 	for(int i = 0; i < x; i++){
 		for(int j = 0; j < y; j++){
-			dest[i][j] = abs(GetMVal(pos,i,j) - GetMVal(neg,i,j));
+            dest[i][j] = fabs(GetMVal(pos,i,j) - GetMVal(neg,i,j));
 		}
 	}
 }

@@ -8,7 +8,7 @@ QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = visualizer-qt
+TARGET = visualizer
 TEMPLATE = app
 
 INCLUDEPATH += ./lib/glm-0.9.2.7
@@ -21,17 +21,32 @@ LIBS += -lfftw3f \
         -lfftw3 \
         -lfftw3l \
         -framework sfml-audio \
-        -framework sfml-system
+        -framework sfml-system \
+        -framework sfml-graphics \
+        -framework sfml-window
 
 INCLUDEPATH += $$FFTWDIR/include
 
 SOURCES += main.cpp\
         mainwindow.cpp \
     glrenderer.cpp \
-    SequentialSoundStreamer.cpp
+    SequentialSoundStreamer.cpp \
+    Vars.cpp \
+    Turing.cpp
 
 HEADERS  += mainwindow.h \
     glrenderer.h \
-    SequentialSoundStreamer.h
+    SequentialSoundStreamer.h \
+    Turing.h
 
 FORMS    += mainwindow.ui
+
+OTHER_FILES += \
+    shaders/turing.f.glsl \
+    shaders/turing.v.glsl \
+    shaders/test.vs.glsl \
+    shaders/test.fs.glsl \
+    shaders/aidiff.f.glsl \
+    shaders/aidiff.v.glsl \
+    shaders/soundwave.f.glsl \
+    shaders/soundwave.v.glsl

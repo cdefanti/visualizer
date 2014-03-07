@@ -31,6 +31,17 @@
 
 // custom files/headers
 #include "SequentialSoundStreamer.h"
+//#include "Turing.h"
+
+const int scales = 5;
+const int varrad = 2;
+const int blurnum = 1;
+
+const int aDef[5] = {100, 64, 16, 4, 1},
+    iDef[5] = {200, 128, 32, 8, 2},
+    wDef[5] = {1,1,1,1,1},
+    sDef[5] = {3,2,2,2,2};
+const double saDef[5] = {.05, .04, .03, .02, .01};
 
 class glrenderer : public QGLWidget
 {
@@ -39,111 +50,135 @@ public:
     glrenderer() :
     buffersize_(2205) {}
     /**
-     * @brief loadShaders
+     * @brief loadShaders loads all available shaders
      */
     void loadShaders();
 
     /**
-     * @brief loadSoundFile
-     * @param filename
+     * @brief loadSoundFile loads a sound file at a given filename
+     * @param filename the location of the file to be played
      */
     void loadSoundFile(const std::string &filename);
 private:
     /**
-     * prints out any compilation errors, etc. generated from the
+     * @brief printShaderLog prints out any compilation errors, etc. generated from the
      * creation of this GL object
      *
-     * Inputs: shader: shader object ID
+     * @param obj shader object ID
      */
     void printShaderLog(GLuint obj);
 
     /**
-     * prints out any compilation errors, etc. generated from the
+     * @brief prints out any compilation errors, etc. generated from the
      * creation of this GL object
      *
-     * Inputs: shader: shader object ID
+     * @param obj shader object ID
      */
     void printProgramLog(GLuint obj);
 
     /**
-     * generates a shader program object from the given vertex and
-     * fragment source files.
-     *
-     * Inputs: vertFileName: vertex shader source filename
-     *         fragFileName: fragment shader source filename
-     * Output: shader program object
+     * @brief initShader generates a shader program object from the given vertex and
+     * fragment source files
+     * @param vertFileName vertex shader source filename
+     * @param fragFileName fragment shader source filename
+     * @return shader program object
      */
     GLint initShader(std::string &vertFileName, std::string &fragFileName);
     /**
-     * generates a bunch of shaders.
+     * @brief initShaders generates a bunch of shaders.
      */
     void initShaders();
 
     /**
-     * renderGrid: Renders a grid of points to be passed to a shader. The positions
+     * @brief initBuffers initializes frame buffer objects for render to texture procedures
+     */
+    void initBuffers();
+
+    /**
+     * @brief renderGrid Renders a grid of points to be passed to a shader. The positions
      * of the points are somewhat arbitrary, since they will be sent to the shader
      * anyways.
      *
-     * Inputs: minx: minimum x value
-     *         maxx: maximum x value
-     *         miny: minimum y value
-     *         maxy: maximum y value
-     *         dx: how far apart each vertex is in the x direction
-     *         dy: how far apart each vertex is in the y direction
+     * @param minx minimum x value
+     * @param maxx maximum x value
+     * @param miny minimum y value
+     * @param maxy maximum y value
+     * @param dx how far apart each vertex is in the x direction
+     * @param dy how far apart each vertex is in the y direction
      */
     void renderGrid(float minx, float maxx, float miny, float maxy, float dx, float dy);
 
     /**
-     * called during the "paintGL" callback. Runs approximately 60FPS,
+     * @brief render called during the "paintGL" callback. Runs approximately 60FPS,
      * although this number is not static and cannot be assumed!
      */
     void render();
 
     void initSoundStream();
     void renderFFT(double *dataAbs);
+    void renderToTexture();
+    glm::vec3 HSVtoRGB(float h, float s, float v);
 
     glm::vec2 dim_;
 
     /**
-     * shaders: a list of all GLuints that link to a shader
+     * @brief shaders a list of all GLuints that link to a shader
      */
     std::vector<GLuint> shaders;
 
     /**
-     * t: current time
+     * @brief t current time
      */
     float t_;
 
     /**
-     * last_t: last time
+     * @brief last_t time of last frame
      */
     float last_t_;
 
     /**
-     * soundstream: streams sound data
+     * @brief soundstream used to stream sound data
      */
     sfe::SequentialSoundStreamer *soundstream_;
 
     /**
-     * sound_t: time of current sound
+     * @brief sound_t time of current sound
      */
     float sound_t_;
+
+    /**
+     * @brief fbo pixel buffer object for the output pixels
+     */
+    GLuint fbo;
+    /**
+     * @brief vbo pixel buffer object for calculating variance
+     */
+    GLuint *vbo;
+
+    GLuint dbo;
+
+    GLuint pixels_[2];
+    GLuint soundTex;
+
+    GLuint soundTexLoc_, pixelTexLoc_;
 
     size_t buffersize_;
 
     QTimer timer_;
     QElapsedTimer etimer_;
+
+    int pingpong;
 protected:
     /**
-     * initializeGL: Calls several functions to setup the initial GL state.
+     * @brief initializeGL Calls several functions to setup the initial GL state.
      */
     void initializeGL();
     void paintGL();
     void updateGL();
     /**
-     * Callback for reshaping the window
-     * Inputs: w: new width of the window, in pixels
-     *         h: new height of the window, in pixels
+     * @brief resizeGL callback for reshaping the window
+     * @param w new width of the window, in pixels
+     * @param h new height of the window, in pixels
      */
     void resizeGL(int width, int height);
 

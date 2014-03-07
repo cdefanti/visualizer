@@ -8,8 +8,9 @@
 class Turing 
 {
 public :
+    static const int scales, varrad, blurnum;
 	Turing();
-    Turing(const int acts[5], const int inhibs[5], const double smalls[5], const int w[5], const int syms[5], const int resW, const int resH);
+    Turing(const int *acts, const int *inhibs, const double *smalls, const int *w, const int *syms, const int resW, const int resH);
 
 	~Turing() {}
 
@@ -19,7 +20,7 @@ public :
 	void AbsMatrixSubtract(double **pos, double **neg, double **dest, int x, int y);
 
 private :
-	static const int scales, varrad, blurnum;
+
 	static const int aDef[5], iDef[5], wDef[5], sDef[5];
 	static const double saDef[5];
 
@@ -27,7 +28,7 @@ private :
 	double *smallAmounts;
 	double **pattern, ***activatorM, ***inhibitorM, ***variationM, ***aiDiffM, **dummy;
 
-	void InitTuring(const int acts[5], const int inhibs[5], const double smalls[5], const int w[5], const int syms[5], const int resW, const int resH);
+    void InitTuring(const int *acts, const int *inhibs, const double *smalls, const int *w, const int *syms, const int resW, const int resH);
 
 	void Activator(), Activator(int sn);
 	void RActivator(), RActivator(int sn);

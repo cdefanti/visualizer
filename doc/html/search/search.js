@@ -7,16 +7,18 @@
 
 var indexSectionsWithContent =
 {
-  0: "gls",
-  1: "s",
-  2: "gl"
+  0: "fgilmprstuv",
+  1: "gmstu",
+  2: "gilpr",
+  3: "flstv"
 };
 
 var indexSectionNames =
 {
   0: "all",
   1: "classes",
-  2: "functions"
+  2: "functions",
+  3: "variables"
 };
 
 function convertToId(search)
